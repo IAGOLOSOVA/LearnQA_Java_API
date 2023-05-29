@@ -3,10 +3,10 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 
-public class testRedirects {
+public class testRedirects1 {
 
     @Test
-    public void testRedirects() {
+    public void testRedirects1() {
 
         Response response = RestAssured
                 .given()
