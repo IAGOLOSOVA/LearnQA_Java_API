@@ -5,7 +5,7 @@ public class GetTest {
     @Test
     public void testGet (){
         Response response = RestAssured
-                .get(" https://playground.learnqa.ru/api/get_text")
+                .get(" https://playground.learnqa.ru/api/hello")
                 .andReturn();
         response.prettyPrint();
 
