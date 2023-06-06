@@ -1,4 +1,7 @@
+package tests_old;
+
 import io.restassured.RestAssured;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
@@ -8,17 +11,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
-public class CookieAsserTest {
+public class HeadersAsserTest {
     @Test
-    public void CookieGet (){
+    public void HeadersGet (){
 
         Response response = RestAssured
-                .get(" https://playground.learnqa.ru/api/homework_cookie")
+                .get(" https://playground.learnqa.ru/api/homework_header")
                 .andReturn();
-        Map<String,String> responseCookies = response.getCookies();
-        System.out.println(responseCookies);
+        Headers headers= response.getHeaders();
+//        System.out.println(headers);
         
         assertEquals(200, response.statusCode(), "Unexpected status code");
-        assertTrue(responseCookies.containsKey("HomeWork"),"Response doesn't have 'HomeWork' cookie");
+        assertTrue(headers.hasHeaderWithName("x-secret-homework-header"),"Response doesn't have secret header");
     }
 }
