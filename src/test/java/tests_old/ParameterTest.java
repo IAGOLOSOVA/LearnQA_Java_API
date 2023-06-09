@@ -20,6 +20,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class ParameterTest {
     @ParameterizedTest
     @ValueSource (strings = {"Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
@@ -27,20 +30,28 @@ public class ParameterTest {
                                "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
                                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.100.0",
                                "Mozilla/5.0 (iPad; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"})
-    public void parTest(String useragent){
-        Map<Headers,String> pars = new HashMap<>();
+        public void parTest(String useragent){
+        Map<String,String> headers = new HashMap<>();
         if (useragent.length() > 0){
-            pars.put(Headers.headers.("user_agent"), useragent);
+            headers.put("user-agent", useragent);
         }
+        String platform = new String("Mobile");
         JsonPath response1 = RestAssured
                 .given()
-                .header(pars)
+                .headers(headers)
                 .when()
                 .get("    https://playground.learnqa.ru/ajax/api/user_agent_check")
-                .andReturn();
+                .jsonPath();
+//        response1.prettyPrint();
+        String answ1 = response1.getString("platform");
+        String answ2 = response1.getString("browser");
+        String answ3 = response1.getString("device");
+        String expectPlatform = (platform.length()>0) ? platform : "NoN";
+        assertTrue(answ1.length() > 0, "Response doesn't have" + "platform");
+        assertEquals(expectPlatform,answ1,"The platform is not expected");
 
-        String answer = response1.get("");
-        System.out.println(answer);
+
+
 
 //    Expected values:
 
