@@ -5,6 +5,7 @@ import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import java.util.*;
+import lib.Assertions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,11 +17,10 @@ public class ParameterTest {
                 "'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', Googlebot, Unknown, Unknown",
                 "'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.100.0', Web, Chrome, No",
                 "'Mozilla/5.0 (iPad; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', Mobile, No, iPhone"})
-        public void parTest(String useragent, String platform, String browser, String device){
+    public void parTestmetodUserAgent(String useragent, String platform, String browser, String device){
         Map<String,String> headers = new HashMap<>();
         if (useragent.length() > 0){
             headers.put("user-agent", useragent);
-
         }
 
 //        String platform = new String("Mobile");
@@ -37,6 +37,7 @@ public class ParameterTest {
         String expectPlatform = (platform.length()>0) ? platform : "NoN";
         String expectBrowser = (browser.length()>0) ? browser : "NoN";
         String expectDevice = (device.length()>0) ? device : "NoN";
+
         assertTrue(answ1.length() > 0, "Response doesn't have" + platform);
         assertEquals(expectPlatform,answ1,"The platform is not expected");
 
