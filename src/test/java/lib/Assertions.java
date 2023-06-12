@@ -28,9 +28,11 @@ public class Assertions {
         );
     }
 
-    public static void assertJsonHasKey(Response Response, String expectedFildName) {
+    public static void assertJsonHasField(Response Response, String expectedFildName) {
         Response.then().assertThat().body("$",hasKey(expectedFildName));
 
     }
-
+    public static void assertJsonHasNotField(Response Response, String unexpectedFildName) {
+        Response.then().assertThat().body("$",not(hasKey(unexpectedFildName)));
+    }    
 }
