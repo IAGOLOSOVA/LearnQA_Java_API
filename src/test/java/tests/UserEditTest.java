@@ -3,6 +3,7 @@ package tests;
 import lib.BaseTestCase;
 import lib.DataGeneration;
 import lib.Assertions;
+import lib.ApiCoreRequests;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class UserEditTest extends BaseTestCase{
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     /**
      * 
      */
@@ -21,11 +23,8 @@ public class UserEditTest extends BaseTestCase{
     public void testEditJustCreatedTest() {
         //Generate user
         Map<String,String> userData = DataGeneration.getRegistrationData();
-        JsonPath responseCreateAuth = RestAssured
-                .given()
-                .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
-                .jsonPath();
+        JsonPath responseCreateAuth = apiCoreRequests
+                .makePostJson("https://playground.learnqa.ru/api/user/",userData);
         
         String userId = responseCreateAuth.getString("id");
         System.out.println(userId);
@@ -34,11 +33,8 @@ public class UserEditTest extends BaseTestCase{
         authData.put("email",userData.get("email"));
         authData.put("password",userData.get("password"));
 
-        Response responseGetAuth = RestAssured
-                .given()
-                .body(authData)
-                .post("https://playground.learnqa.ru/api/user/login")
-                .andReturn();
+        Response responseGetAuth = apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
         String header = this.getHeader(responseGetAuth,"x-csrf-token");
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
 
@@ -47,23 +43,16 @@ public class UserEditTest extends BaseTestCase{
         Map<String,String> editData = new HashMap<>();
         editData.put("firstName", newName);
         
-        Response responseEditUser = RestAssured
-                .given()
-                .header("x-csrf-token",header)
-                .cookie("auth_sid", cookie)
-                .body(editData)
-                .get("https://playground.learnqa.ru/api/user/" + userId)
-                .andReturn();
+        Response responseEditUser = apiCoreRequests
+                .makePutRequest(("https://playground.learnqa.ru/api/user/" + userId), header, cookie, editData);
 
         //Get
-        Response responseUserData = RestAssured
-                .given()
-                .header("x-csrf-token",this.getHeader(responseGetAuth,"x-csrf-token"))
-                .cookie("auth_sid", this.getCookie(responseGetAuth, "auth_sid"))
-                .get("https://playground.learnqa.ru/api/user/" + userId)
-                .andReturn();
+        Response responseUserData =apiCoreRequests
+                .makeGetRequest("https://playground.learnqa.ru/api/user/" + userId, header, cookie);
 
-        Assertions.asserJsonByName(responseUserData, "username", newName);
+        
+        //System.out.println(responseUserData.asString());
+        Assertions.asserJsonByName(responseUserData, "firstName", newName);
     }
     
 }
