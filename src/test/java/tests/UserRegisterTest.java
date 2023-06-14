@@ -33,10 +33,7 @@ public class UserRegisterTest extends BaseTestCase {
 
         Map<String, String> userData = new HashMap<>();
         userData.put("email", email);
-        userData.put("password", "123");
-        userData.put("username", "learnqa");
-        userData.put("firstName", "learnqa");
-        userData.put("lastName", "learnqa");
+        userData = DataGeneration.getRegistrationData(userData);
 
         Response responseCreatAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
@@ -48,15 +45,9 @@ public class UserRegisterTest extends BaseTestCase {
     @Description("This test successfully to registrate user with new email")
     @DisplayName("Test positive create user")
     public void testCresteUserSuccessfully() {
-        String email = DataGeneration.getRandomEmail();
-
-        Map<String, String> userData = new HashMap<>();
-        userData.put("email", email);
-        userData.put("password", "123");
-        userData.put("username", "learnqa");
-        userData.put("firstName", "learnqa");
-        userData.put("lastName", "learnqa");
-
+        
+        Map<String,String> userData = DataGeneration.getRegistrationData();
+        
         Response responseCreatAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
         Assertions.asserResponseCodeEquals(responseCreatAuth, 200);
@@ -68,14 +59,10 @@ public class UserRegisterTest extends BaseTestCase {
     @DisplayName("Test negative create user with invalid email")
     public void testCresteUserWithInvalidEmail() {
         String email = "vinkotovexample.com";
-
         Map<String, String> userData = new HashMap<>();
         userData.put("email", email);
-        userData.put("password", "123");
-        userData.put("username", "learnqa");
-        userData.put("firstName", "learnqa");
-        userData.put("lastName", "learnqa");
-
+        userData = DataGeneration.getRegistrationData(userData);
+        
         Response responseCreatAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
         Assertions.asserResponseCodeEquals(responseCreatAuth, 400);
@@ -105,7 +92,6 @@ public class UserRegisterTest extends BaseTestCase {
         if (!param.equals("lastName")) {
             userData.put("lastName", "learnqa");
         }
-
         // userData.put(param,"");
         // System.out.print(userData);
         Response responseCreatAuth = apiCoreRequests
@@ -124,12 +110,9 @@ public class UserRegisterTest extends BaseTestCase {
         String name = DataGeneration.getRandomName("1");
         System.out.println(name);
         Map<String, String> userData = new HashMap<>();
-        userData.put("email", "vinkotov@example.com");
-        userData.put("password", "123");
         userData.put("username", name);
-        userData.put("firstName", "learnqa");
-        userData.put("lastName", "learnqa");
-
+        userData = DataGeneration.getRegistrationData(userData);
+        
         Response responseCreatAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
         //responseCreatAuth.prettyPrint();        
@@ -145,11 +128,8 @@ public class UserRegisterTest extends BaseTestCase {
         String name = DataGeneration.getRandomName("251");
         System.out.println(name);
         Map<String, String> userData = new HashMap<>();
-        userData.put("email", "vinkotov@example.com");
-        userData.put("password", "123");
         userData.put("username", name);
-        userData.put("firstName", "learnqa");
-        userData.put("lastName", "learnqa");
+        userData = DataGeneration.getRegistrationData(userData);
 
         Response responseCreatAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
