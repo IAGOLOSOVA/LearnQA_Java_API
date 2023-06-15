@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class Assertions {
     public static void asserJsonByName(Response Response, String name, int expectedValue) {
@@ -19,6 +20,19 @@ public class Assertions {
 
         String value = Response.jsonPath().getString(name);
         assertEquals(expectedValue,value,"JSON value is not equal to expected value");
+    }
+    public static void asserNotJsonByName(Response Response, String name, int expectedValue) {
+        Response.then().assertThat().body("$",hasKey(name));
+
+        int value = Response.jsonPath().getInt(name);
+        assertNotEquals(expectedValue,value,"JSON value is equal to expected value");
+    }
+
+    public static void asserNotJsonByName (Response Response, String name, String expectedValue) {
+        Response.then().assertThat().body("$",hasKey(name));
+
+        String value = Response.jsonPath().getString(name);
+        assertNotEquals(expectedValue,value,"JSON value is equal to expected value");
     }
     public static void asserResponseTextEquals(Response Response, String expectedAnswer) {
         assertEquals(

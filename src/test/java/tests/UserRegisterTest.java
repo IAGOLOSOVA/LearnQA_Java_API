@@ -58,7 +58,7 @@ public class UserRegisterTest extends BaseTestCase {
     @Description("This test not successfully to registrate user with email without @")
     @DisplayName("Test negative create user with invalid email")
     public void testCresteUserWithInvalidEmail() {
-        String email = "vinkotovexample.com";
+        String email = DataGeneration.getBadRandomEmail();
         Map<String, String> userData = new HashMap<>();
         userData.put("email", email);
         userData = DataGeneration.getRegistrationData(userData);
@@ -71,7 +71,7 @@ public class UserRegisterTest extends BaseTestCase {
 
     @ParameterizedTest
     @Description("This test not successfully to registrate user without any parametr")
-    @DisplayName("Test negative create user with invalid email")
+    @DisplayName("Test negative create user without one parametr")
     @ValueSource(strings = { "email", "password", "username", "firstName", "lastName" })
     public void testCresteUserWithoutAnyParam(String param) {
         String email = DataGeneration.getRandomEmail();
