@@ -13,6 +13,12 @@ import org.junit.jupiter.api.Test;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Links;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+
 import org.junit.jupiter.api.DisplayName;
 
 
@@ -21,12 +27,15 @@ import io.restassured.response.Response;
 
 @Epic("User delete test")
 @Feature("Delete User")
+@Owner("Golosova I.A.")
+@Link(name = "API methods", url = "https://playground.learnqa.ru/api/map")   
 public class UserDeleteTest extends BaseTestCase{
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
      
     @Test
     @Description("This test unsuccessfully delete of authorized user with id2")
     @DisplayName("Test negative delete auth user with id2") 
+    @Severity(SeverityLevel.BLOCKER)
     public void testDeleteAdminUserTest() {
         
         //Login admin user with id=2
@@ -50,6 +59,7 @@ public class UserDeleteTest extends BaseTestCase{
     @Test
     @Description("This test successfully registers a new user and delete of this authorized user")
     @DisplayName("Test positive register and delete new user") 
+    @Severity(SeverityLevel.CRITICAL)
     public void testDeleteAuthUserTest() {
         //Generate new user
         Map<String,String> userData = DataGeneration.getRegistrationData();
@@ -86,6 +96,7 @@ public class UserDeleteTest extends BaseTestCase{
     @Test
     @Description("This test successfully registers a new user and unsuccessfully delete of another user")
     @DisplayName("Test negative delete another user") 
+    @Severity(SeverityLevel.BLOCKER)
     public void testDeleteAnotherUserTest() {
         //Generate new user
         Map<String,String> userData = DataGeneration.getRegistrationData();

@@ -17,17 +17,24 @@ import java.util.Random;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+
 import org.junit.jupiter.api.DisplayName;
 
 @Epic("Registration test")
 @Feature("Registration")
-
+@Link(name = "API methods", url = "https://playground.learnqa.ru/api/map")
 public class UserRegisterTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
     @Description("This test not successfully to registrate authorize user with existing email")
     @DisplayName("Test negative create user")
+    @Owner("learnqa.example")
+    @Severity(SeverityLevel.CRITICAL)
     public void testCreateUserWithExistingEmail() {
         String email = "vinkotov@example.com";
 
@@ -44,6 +51,8 @@ public class UserRegisterTest extends BaseTestCase {
     @Test
     @Description("This test successfully to registrate user with new email")
     @DisplayName("Test positive create user")
+    @Owner("learnqa.example")
+    @Severity(SeverityLevel.CRITICAL)
     public void testCresteUserSuccessfully() {
         
         Map<String,String> userData = DataGeneration.getRegistrationData();
@@ -57,6 +66,8 @@ public class UserRegisterTest extends BaseTestCase {
     @Test
     @Description("This test not successfully to registrate user with email without @")
     @DisplayName("Test negative create user with invalid email")
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCresteUserWithInvalidEmail() {
         String email = DataGeneration.getBadRandomEmail();
         Map<String, String> userData = new HashMap<>();
@@ -73,6 +84,8 @@ public class UserRegisterTest extends BaseTestCase {
     @Description("This test not successfully to registrate user without any parametr")
     @DisplayName("Test negative create user without one parametr")
     @ValueSource(strings = { "email", "password", "username", "firstName", "lastName" })
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCresteUserWithoutAnyParam(String param) {
         String email = DataGeneration.getRandomEmail();
 
@@ -105,6 +118,8 @@ public class UserRegisterTest extends BaseTestCase {
     @Test
     @Description("This test not successfully to registrate user with short name")
     @DisplayName("Test negative create user with short name")
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.NORMAL)
     public void testCresteUserWithShortName() {
         //String name = " ";
         String name = DataGeneration.getRandomName("1");
@@ -123,6 +138,8 @@ public class UserRegisterTest extends BaseTestCase {
     @Test
     @Description("This test not successfully to registrate user with name longer 250")
     @DisplayName("Test negative create user with name longer 250")
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.NORMAL)
     public void testCresteUserWithLongName() {
         
         String name = DataGeneration.getRandomName("251");

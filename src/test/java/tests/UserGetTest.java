@@ -16,16 +16,27 @@ import lib.ApiCoreRequests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Links;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
+
 import org.junit.jupiter.api.DisplayName;
 
 @Epic("Get User Data test")
 @Feature("User Data")
+@Link(name = "API methods", url = "https://playground.learnqa.ru/api/map")
+
 public class UserGetTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
     @Description("This test unsuccessfully to get data from an unauthorized user")
     @DisplayName("Test negative get data unauthorised user")
+    @Owner("learnqa.example")
+    @Severity(SeverityLevel.CRITICAL)
     public void testGetUserDataNotAuth() {
         Response responseUserData = RestAssured
         .get ("https://playground.learnqa.ru/api/user/2")
@@ -38,6 +49,8 @@ public class UserGetTest extends BaseTestCase {
     @Test
     @Description("This test successfully logs in an authorised user and gets this user details")
     @DisplayName("Test positive get data authorise user")
+    @Owner("learnqa.example")
+    @Severity(SeverityLevel.CRITICAL)
     public void testGetUserDetailsAuthAsSameUser() {
         Map<String,String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");
@@ -57,6 +70,8 @@ public class UserGetTest extends BaseTestCase {
     @Test
     @Description("This test successfully logs in an authorised user and does not get another user details")
     @DisplayName("Test negative get data another authorise user")
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.CRITICAL)
     public void testGetAnotherUserDetailsAuthAsSameUser() {
         //Generate user
         Map<String,String> userData = DataGeneration.getRegistrationData();

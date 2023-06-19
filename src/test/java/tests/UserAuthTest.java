@@ -1,7 +1,6 @@
 package tests;
 
-import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
+
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lib.Assertions;
@@ -17,16 +16,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Links;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+
 import org.junit.jupiter.api.DisplayName;
 
 @Epic("Authorisation cases")
 @Feature("Autorization")
+@Link(name = "API methods", url = "https://playground.learnqa.ru/api/map")                
 public class UserAuthTest extends BaseTestCase {
 
     String cookie;
@@ -52,6 +55,8 @@ public class UserAuthTest extends BaseTestCase {
     @Test //Позитивный авторизованный тест
     @Description("This test successfully authorize user by email and password")
     @DisplayName("Test positive auth user")
+    @Owner("learnqa.example")
+    @Severity(SeverityLevel.BLOCKER)
     public void testAuthUser(){
 
 //Отправляем гет запрос на метод, который проверяет авторизованного пользователя
@@ -67,6 +72,8 @@ public class UserAuthTest extends BaseTestCase {
 
     @Description("This test checks authrisation status w/o sending auth cookie or token")
     @DisplayName("Test negative auth user")
+    @Owner("learnqa.example")
+    @Severity(SeverityLevel.BLOCKER)
     @ParameterizedTest //2 негативных Тест с параметрами, сервер проверяет авторизован пользователь или нет
     @ValueSource (strings = {"cookie", "headers"})
     public void testNegativeAuthUser(String condition){

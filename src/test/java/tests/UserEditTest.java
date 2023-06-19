@@ -14,6 +14,12 @@ import org.junit.jupiter.api.Test;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Links;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+
 import org.junit.jupiter.api.DisplayName;
 
 
@@ -22,12 +28,15 @@ import io.restassured.response.Response;
 
 @Epic("User edit test")
 @Feature("Edit")
+@Link(name = "API methods", url = "https://playground.learnqa.ru/api/map")
 public class UserEditTest extends BaseTestCase{
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     
     @Test
     @Description("This test successfully registers a new user and changes the name of this authorized user")
     @DisplayName("Test positive edit user name") 
+    @Owner("learnqa.example")
+    @Severity(SeverityLevel.CRITICAL)
     public void testEditJustCreatedTest() {
         //Generate user
         Map<String,String> userData = DataGeneration.getRegistrationData();
@@ -65,6 +74,8 @@ public class UserEditTest extends BaseTestCase{
     @Test
     @Description("This test successfully registers a new user and does not change the name of this unauthorized user")
     @DisplayName("Test negative edit not auth user data") 
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.BLOCKER)
     public void testEditTestNotAuthUser() {
         //Generate new user
         Map<String,String> userData = DataGeneration.getRegistrationData();
@@ -88,6 +99,8 @@ public class UserEditTest extends BaseTestCase{
     @Test
     @Description("This test successfully authorises a new user and does not change the name of another user")
     @DisplayName("Test negative edit another user data") 
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.BLOCKER)
     public void testEditAnotherUser() {
         //Generate new user
         Map<String,String> userData = DataGeneration.getRegistrationData();
@@ -127,6 +140,8 @@ public class UserEditTest extends BaseTestCase{
     @Test
     @Description("This test does not change the email without @ of authorized user")
     @DisplayName("Test negative edit invalid email without @") 
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.CRITICAL)
     public void testEditBadEmailTest() {
         //Generate user
         Map<String,String> userData = DataGeneration.getRegistrationData();
@@ -160,7 +175,9 @@ public class UserEditTest extends BaseTestCase{
 
     @Test
     @Description("This test does not change firstName of authorized user to a very short")
-    @DisplayName("Test negative edit invalid email without @") 
+    @DisplayName("Test negative edit name to a very short") 
+    @Owner("Golosova I.A.")
+    @Severity(SeverityLevel.NORMAL)
     public void testEditVeryShortNameTest() {
         //Generate user
         Map<String,String> userData = DataGeneration.getRegistrationData();
