@@ -85,7 +85,7 @@ public class UserDeleteTest extends BaseTestCase{
     
     @Test
     @Description("This test successfully registers a new user and unsuccessfully delete of another user")
-    @DisplayName("Test negative delete anoter user") 
+    @DisplayName("Test negative delete another user") 
     public void testDeleteAnotherUserTest() {
         //Generate new user
         Map<String,String> userData = DataGeneration.getRegistrationData();
@@ -129,9 +129,7 @@ public class UserDeleteTest extends BaseTestCase{
         Assertions.assertJsonHasField(responseUserData, "username");
         Assertions.asserJsonByName(responseUserData, "username", username);
         String[] expectedFields = {"firstName", "lastName","email"};
-        Assertions.assertJsonHasNotFields(responseUserData, expectedFields);
-        
-        
+        Assertions.assertJsonHasNotFields(responseUserData, expectedFields);        
     }
     
 }
